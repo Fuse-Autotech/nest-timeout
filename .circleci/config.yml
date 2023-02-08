@@ -7,6 +7,8 @@ executors:
   default:
     docker:
       - image: cimg/node:16.17.1
+    environment:
+      PARAM_CACHE_PATH: node_modules
 
 anchors:
   filters-all: &filters-all
@@ -20,9 +22,9 @@ anchors:
     tags:
       only: /release\/.*/
 
-jobs:
-  lint:
-    executor: default
+#jobs:
+#  lint:
+#    executor: default
 
 workflows:
   ci-cd:
@@ -30,4 +32,12 @@ workflows:
       - node/run:
           name: lint
           npm-run: lint
+          filters: *filters-all
+      - node/run:
+          name: build
+          npm-run: build
+          filters: *filters-all
+      - node/test:
+          name: test
+          test-results-path: junit.xml
           filters: *filters-all
