@@ -22,6 +22,11 @@ anchors:
     tags:
       only: /release\/.*/
 
+parameters:
+  cache-version:
+    type: string
+    default: v2
+
 #jobs:
 #  lint:
 #    executor: default
@@ -32,12 +37,15 @@ workflows:
       - node/run:
           name: lint
           npm-run: lint
+          cache-version: << pipeline.parameters.cache-version >>
           filters: *filters-all
       - node/run:
           name: build
           npm-run: build
+          cache-version: << pipeline.parameters.cache-version >>
           filters: *filters-all
       - node/test:
           name: test
           test-results-path: junit.xml
+          cache-version: << pipeline.parameters.cache-version >>
           filters: *filters-all
