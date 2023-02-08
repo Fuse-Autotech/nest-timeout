@@ -37,7 +37,7 @@ import { AppService } from './app.service';
         isEnabled: IS_TIMEOUT_ENABLED,
       });
     },
-    inject: [ConfigService],
+    inject: [],
   },],
 })
 export class AppModule {}
