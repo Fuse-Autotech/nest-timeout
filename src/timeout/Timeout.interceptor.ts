@@ -10,7 +10,7 @@ import { catchError, timeout } from 'rxjs/operators';
 import { Reflector } from '@nestjs/core';
 import { ITimeoutInterceptorOptions } from './types';
 import { getMetaDataKey, isNil } from './utils';
-import { CLASS_INDICATOR } from './constants';
+import { CLASS_INDICATOR, REQUEST_TIMEOUT_LIMIT } from "./constants";
 
 const timeoutIf = (
   shouldTimeout: boolean,
@@ -35,7 +35,7 @@ const timeoutIf = (
 export class TimeoutInterceptor implements NestInterceptor {
   private readonly options: ITimeoutInterceptorOptions = {
     isEnabled: true,
-    defaultTimeout: 10 * 1000,
+    defaultTimeout: ,
   };
   private readonly reflector = new Reflector();
 
