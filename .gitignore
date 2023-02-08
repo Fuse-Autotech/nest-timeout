@@ -1,0 +1,55 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+dist
+tmp
+out-tsc
+out
+
+# dependencies
+node_modules
+
+# tests output
+coverage
+
+# IDEs and editors
+/.idea
+**/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+*.log
+storybook-static
+.development.env
+**/**/.DS_Store
+/.vs
+/financeIntelligence/Models/StoreConfigurations/Dube_Hyundai.cs
+**/proto
+**/src/wsdl/generated
+*.local
+junit.xml
+/apps/digital-retail-proxy/.env
+
+# System Files
+.DS_Store
+Thumbs.db
