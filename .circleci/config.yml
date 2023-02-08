@@ -35,7 +35,7 @@ workflows:
           name: build
           npm-run: build
           filters: *filters-all
-      - node/run:
+      - node/test:
           name: test
-          npm-run: test
+          test-results-path: junit.xml
           filters: *filters-all
