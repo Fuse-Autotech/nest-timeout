@@ -31,3 +31,11 @@ workflows:
           name: lint
           npm-run: lint
           filters: *filters-all
+      - node/run:
+          name: build
+          npm-run: build
+          filters: *filters-all
+      - node/run:
+          name: test
+          npm-run: test
+          filters: *filters-all
