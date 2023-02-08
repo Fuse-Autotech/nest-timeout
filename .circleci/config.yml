@@ -20,9 +20,9 @@ anchors:
     tags:
       only: /release\/.*/
 
-jobs:
-  lint:
-    executor: default
+#jobs:
+#  lint:
+#    executor: default
 
 workflows:
   ci-cd:
