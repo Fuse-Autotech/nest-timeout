@@ -1,5 +1,5 @@
 {
-  "name": "timeout-decorator",
+  "name": "nest-timeout",
   "version": "0.0.1",
   "description": "This package enables to use a custom timeout alongside with the global timeout interceptor.",
   "author": "Alex Genkin",
