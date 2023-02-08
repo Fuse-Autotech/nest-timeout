@@ -1,0 +1,33 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.1.0
+
+executors:
+  default:
+    docker:
+      - image: cimg/node:16.17.1
+
+anchors:
+  filters-all: &filters-all
+    branches:
+      only: /.*/
+    tags:
+      only: /release/.*/
+  filters-release: &filters-release
+    branches:
+      ignore: /.*/
+    tags:
+      only: /release\/.*/
+
+jobs:
+  lint:
+    executor: default
+
+workflows:
+  ci-cd:
+    jobs:
+      - node/run:
+          name: lint
+          npm-run: lint
+          filters: *filters-all
