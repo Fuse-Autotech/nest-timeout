@@ -7,6 +7,8 @@ executors:
   default:
     docker:
       - image: cimg/node:16.17.1
+    environment:
+      PARAM_CACHE_PATH: node_modules
 
 anchors:
   filters-all: &filters-all
@@ -20,10 +22,6 @@ anchors:
     tags:
       only: /release\/.*/
 
-parameters:
-  cache-path:
-    type: string
-    default: "node_modules"
 #jobs:
 #  lint:
 #    executor: default
@@ -38,10 +36,8 @@ workflows:
       - node/run:
           name: build
           npm-run: build
-          cache-path: << pipeline.parameters.cache-path >>
           filters: *filters-all
       - node/test:
           name: test
           test-results-path: junit.xml
-          cache-path: << pipeline.parameters.cache-path >>
           filters: *filters-all
