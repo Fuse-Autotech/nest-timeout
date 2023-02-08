@@ -32,6 +32,7 @@ jobs:
       - checkout
       - node/install-packages:
           cache-path: ~/project/node_modules
+          override-ci-command: npm install
       - run: npm run << parameters.npm-run >>
 
 workflows:
