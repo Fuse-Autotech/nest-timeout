@@ -4,7 +4,7 @@
   "description": "This package enables to use a custom timeout alongside with the global timeout interceptor.",
   "author": "Alex Genkin",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
