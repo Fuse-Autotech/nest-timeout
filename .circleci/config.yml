@@ -20,6 +20,10 @@ anchors:
     tags:
       only: /release\/.*/
 
+parameters:
+  cache-path:
+    type: string
+    default: "node_modules"
 #jobs:
 #  lint:
 #    executor: default
@@ -34,8 +38,10 @@ workflows:
       - node/run:
           name: build
           npm-run: build
+          cache-path: << pipeline.parameters.cache-path >>
           filters: *filters-all
       - node/test:
           name: test
           test-results-path: junit.xml
+          cache-path: << pipeline.parameters.cache-path >>
           filters: *filters-all
