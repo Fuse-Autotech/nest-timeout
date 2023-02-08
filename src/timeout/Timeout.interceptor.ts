@@ -34,8 +34,8 @@ const timeoutIf = (
 @Injectable()
 export class TimeoutInterceptor implements NestInterceptor {
   private readonly options: ITimeoutInterceptorOptions = {
-    isEnabled: true,
-    defaultTimeout: ,
+    isEnabled: Boolean(process.env.IS_TIMEOUT_ENABLED) ?? true,
+    defaultTimeout: +process.env.REQUEST_TIMEOUT_LIMIT ?? REQUEST_TIMEOUT_LIMIT,
   };
   private readonly reflector = new Reflector();
 
