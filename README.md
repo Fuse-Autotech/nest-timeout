@@ -22,9 +22,10 @@ $ npm install
 
 ```typescript
 
-import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from "@nestjs/core";
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TimeoutInterceptor } from "./timeout";
+import { IS_TIMEOUT_ENABLED, REQUEST_TIMEOUT_LIMIT } from "./timeout/constants";
 
 @Module({
   imports: [],
