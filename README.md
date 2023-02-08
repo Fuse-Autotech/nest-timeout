@@ -41,6 +41,9 @@ import { AppService } from './app.service';
   },],
 })
 export class AppModule {}
+```
+
+```typescript
 
 import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { Timeout } from '../decorator/timeout.decorator';
