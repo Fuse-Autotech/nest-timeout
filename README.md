@@ -36,7 +36,7 @@ import { IS_TIMEOUT_ENABLED, REQUEST_TIMEOUT_LIMIT } from "./timeout/constants";
     useFactory: async (): Promise<NestInterceptor> => {
       return new TimeoutInterceptor({
         defaultTimeout: +process.env.REQUEST_TIMEOUT_LIMIT ?? REQUEST_TIMEOUT_LIMIT,
-        isEnabled: IS_TIMEOUT_ENABLED,
+        isEnabled: Boolean(process.env.IS_TIMEOUT_ENABLED) ?? IS_TIMEOUT_ENABLED,
       });
     },
     inject: [],
