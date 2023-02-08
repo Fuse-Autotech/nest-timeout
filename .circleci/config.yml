@@ -22,30 +22,30 @@ anchors:
     tags:
       only: /release\/.*/
 
-parameters:
-  cache-version:
-    type: string
-    default: v2
-
 #jobs:
-#  lint:
-#    executor: default
+  node-run:
+    executor: default
+    parameters:
+      npm-run:
+        type: string
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+      - run: npm run << parameters.npm-run >>
 
 workflows:
   ci-cd:
     jobs:
-      - node/run:
+      - node-run:
           name: lint
           npm-run: lint
-          cache-version: << pipeline.parameters.cache-version >>
           filters: *filters-all
-      - node/run:
+      - node-run:
           name: build
           npm-run: build
-          cache-version: << pipeline.parameters.cache-version >>
           filters: *filters-all
-      - node/test:
+      - node-run:
           name: test
-          test-results-path: junit.xml
-          cache-version: << pipeline.parameters.cache-version >>
+          npm-run: test
           filters: *filters-all
