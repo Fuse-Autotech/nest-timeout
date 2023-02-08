@@ -22,7 +22,7 @@ anchors:
     tags:
       only: /release\/.*/
 
-#jobs:
+jobs:
   node-run:
     executor: default
     parameters:
