@@ -2,8 +2,8 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![CircleCI](https://circleci.com/gh/Fuse-Autotech/nest-timeout.svg?branch=main?style=svg&circle-token=94c693abc89341393d317ca92a78e8da4f7ca104)](<LINK>)
 
   <p align="center">Timeout Decorator for NestJS</p>
 ## Description
