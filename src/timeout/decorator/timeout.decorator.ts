@@ -22,7 +22,6 @@ export const Timeout = (timeout: number): MethodDecorator & ClassDecorator => {
 
     const metaDataKey = getMetaDataKey(controllerName, methodName);
 
-    // https://github.com/nestjs/nest/blob/master/packages/common/decorators/core/set-metadata.decorator.ts
     if (descriptor) {
       Reflect.defineMetadata(metaDataKey, timeout, descriptor.value);
 
