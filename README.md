@@ -1,12 +1,14 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+
+Timeout Decorator for NestJS
 
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Fuse-Autotech](https://circleci.com/gh/Fuse-Autotech/nest-timeout.svg?branch=main&style=shield&circle-token=94c693abc89341393d317ca92a78e8da4f7ca104)](https://app.circleci.com/pipelines/github/Fuse-Autotech/nest-timeout)
 
-  <p align="center">Timeout Decorator for NestJS</p>
+</p>
+
 ## Description
 
 Nest timeout decorator repository. It enables you to set a timeout for your controller methods using the NestJS
