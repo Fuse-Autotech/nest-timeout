@@ -24,15 +24,13 @@ $ npm install
 
 import { Module, NestInterceptor } from "@nestjs/common";
 import { APP_INTERCEPTOR } from "@nestjs/core";
-import { AppController } from './app.controller';
 import { TimeoutInterceptor } from "./timeout";
 import { IS_TIMEOUT_ENABLED, REQUEST_TIMEOUT_LIMIT } from "./timeout/constants";
 import { TimeoutOverrideClassTestController } from "./timeout/spec/TimeoutClassOverrideTest.controller";
-import { TimeoutMethodTestController } from "./timeout/spec";
 
 @Module({
   imports: [],
-  controllers: [AppController, TimeoutOverrideClassTestController, TimeoutMethodTestController],
+  controllers: [TimeoutOverrideClassTestController],
   providers: [{
     provide: APP_INTERCEPTOR,
     useFactory: async (): Promise<NestInterceptor> => {
