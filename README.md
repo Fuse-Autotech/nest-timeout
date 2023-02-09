@@ -30,7 +30,7 @@ import { TimeoutOverrideClassTestController } from "./timeout/spec/TimeoutClassO
 
 @Module({
   imports: [],
-  controllers: [TimeoutOverrideClassTestController],
+  controllers: [],
   providers: [{
     provide: APP_INTERCEPTOR,
     useFactory: async (): Promise<NestInterceptor> => {
