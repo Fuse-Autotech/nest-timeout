@@ -47,6 +47,10 @@ workflows:
           npm-run: test
       - release:
           name: release
+          requires:
+            - lint
+            - build
+            - test
           filters:
             branches:
               only: main
