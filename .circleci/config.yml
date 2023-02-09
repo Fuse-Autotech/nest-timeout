@@ -9,6 +9,11 @@ executors:
       - image: cimg/node:16.17.1
     environment:
       PARAM_CACHE_PATH: node_modules
+  node18:
+    docker:
+      - image: cimg/node:18.14.0
+    environment:
+      PARAM_CACHE_PATH: node_modules
 
 jobs:
   node-run:
@@ -22,6 +27,11 @@ jobs:
           cache-path: ~/project/node_modules
           override-ci-command: npm install
       - run: npm run << parameters.npm-run >>
+  release:
+    executor: node18
+    steps:
+      - checkout
+      - run: npx semantic-release --ci
 
 workflows:
   ci-cd:
@@ -35,9 +45,8 @@ workflows:
       - node-run:
           name: test
           npm-run: test
-      - node-run:
-          name: publish
-          npm-run: semantic-release
+      - release:
+          name: release
           filters:
             branches:
               only: main
