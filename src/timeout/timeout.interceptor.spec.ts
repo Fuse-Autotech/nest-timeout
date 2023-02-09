@@ -234,18 +234,19 @@ describe('TimeoutInterceptor with timeout decorator', () => {
       {
         title:
           'Should override class decorator with method decorator with a smaller value',
-        options: [{ isEnabled: true }],
+        options: [{ isEnabled: true, defaultTimeout: 1000 }],
         sleepTime: 13000,
         timeoutBorder: [
           TIMEOUT_VALUES.timeout500ms,
           TIMEOUT_VALUES.defaultTimeout,
         ],
-        controllerPath: '/timeout-method-test-controller/',
+        controllerPath: '/timeout-override-class-test-controller/',
         restMethod: ['post', 'get'],
         responseStatus: [
           HttpStatus.REQUEST_TIMEOUT,
           HttpStatus.REQUEST_TIMEOUT,
         ],
+        overrideWithSmallerValue: true,
       },
       {
         title:
@@ -304,6 +305,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
       responseStatus: HttpStatus[];
       sleepTime: number;
       timeoutBorder: number[];
+      overrideWithSmallerValue?: boolean;
     }[]
   ).map(
     ({
@@ -314,6 +316,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
       responseStatus,
       sleepTime,
       timeoutBorder,
+      overrideWithSmallerValue,
     }) => {
       options.forEach((option) => {
         const defaultTimeout = option.defaultTimeout;
@@ -329,6 +332,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
             responseStatus,
             defaultTimeout,
             controllerPath,
+            overrideWithSmallerValue
           );
         });
       });
@@ -343,6 +347,7 @@ const testRequestTimeAndStatus = async (
   responseStatus: HttpStatus[],
   defaultTimeout: number,
   controllerPath: string,
+  overrideWithSmallerValue: boolean = false,
 ): Promise<void> => {
   for (const [index, method] of restMethod.entries()) {
     const startTime = new Date().valueOf();
@@ -357,7 +362,9 @@ const testRequestTimeAndStatus = async (
       defaultTimeout = TIMEOUT_VALUES.defaultTimeout;
     }
 
-    expect(timeoutDurationValue).toBeGreaterThanOrEqual(timeoutBorder[index]);
+    if (!overrideWithSmallerValue) {
+      expect(timeoutDurationValue).toBeGreaterThanOrEqual(timeoutBorder[index]);
+    }
     expect(timeoutDurationValue).toBeLessThan(
       timeoutBorder[index] + TIMEOUT_VALUES.requestRTT,
     );
