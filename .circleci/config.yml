@@ -9,35 +9,44 @@ executors:
       - image: cimg/node:16.17.1
     environment:
       PARAM_CACHE_PATH: node_modules
+  node18:
+    docker:
+      - image: cimg/node:18.14.0
+    environment:
+      PARAM_CACHE_PATH: node_modules
 
-anchors:
-  filters-all: &filters-all
-    branches:
-      only: /.*/
-    tags:
-      only: /release/.*/
-  filters-release: &filters-release
-    branches:
-      ignore: /.*/
-    tags:
-      only: /release\/.*/
-
-#jobs:
-#  lint:
-#    executor: default
+jobs:
+  node-run:
+    executor: default
+    parameters:
+      npm-run:
+        type: string
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          override-ci-command: npm install
+      - run: npm run << parameters.npm-run >>
+  release:
+    executor: node18
+    steps:
+      - checkout
+      - run: npx semantic-release --ci
 
 workflows:
   ci-cd:
     jobs:
-      - node/run:
+      - node-run:
           name: lint
           npm-run: lint
-          filters: *filters-all
-      - node/run:
+      - node-run:
           name: build
           npm-run: build
-          filters: *filters-all
-      - node/test:
+      - node-run:
           name: test
-          test-results-path: junit.xml
-          filters: *filters-all
+          npm-run: test
+      - release:
+          name: release
+          filters:
+            branches:
+              only: main

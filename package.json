@@ -1,6 +1,6 @@
 {
   "name": "nest-timeout",
-  "version": "0.0.1",
+  "version": "0.0.0-development",
   "description": "This package enables to use a custom timeout alongside with the global timeout interceptor.",
   "author": "Alex Genkin",
   "private": true,
@@ -18,7 +18,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -71,5 +72,12 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fuse-Autotech/nest-timeout.git"
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }
