@@ -1,4 +1,4 @@
-import { HttpStatus } from "@nestjs/common";
+import { HttpStatus } from '@nestjs/common';
 
 export interface ITimeoutInterceptorOptions {
 	defaultTimeout: number;
@@ -15,5 +15,5 @@ export interface TestOptions {
 	sleepTime: number;
 	timeoutBorder: number[];
 	overrideWithSmallerValue?: boolean;
-	skip: boolean,
+	skip: boolean;
 }

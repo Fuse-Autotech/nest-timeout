@@ -114,7 +114,7 @@ describe('TimeoutInterceptor without timeout decorator', () => {
       addSleepTime?: boolean;
     }[]
   ).map(({ title, options, shouldTimeout, addSleepTime = true }) => {
-    it.only(title, async () => {
+    it(title, async () => {
       // Arrange
       await setUpModule(options);
       const sleepTime = options.defaultTimeout + (addSleepTime ? 100 : -100);
@@ -315,7 +315,8 @@ describe('TimeoutInterceptor with timeout decorator', () => {
       options.forEach((option) => {
         const defaultTimeout = option.defaultTimeout;
 
-        it[skip ? 'skip' : 'only'](title, async () => {
+        // const testFn = skip ? xit : it;
+        it(title, async () => {
           // Arrange
 
           await setUpModule(option);
