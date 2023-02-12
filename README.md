@@ -1,4 +1,4 @@
-<div align="center">
+<div align="center" style="background-color: darkgray">
 <p align="center">
   <a href="http://fuseautotech.com/" target="blank"><img src="https://fuseautotech.com/hubfs/Logo.svg" width="300" alt="Fuse Logo" /></a>
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
@@ -13,7 +13,7 @@
 
 ## Description
 
-NestJS Timeout Interceptor repository. It enables setting up a timeout for a NestJS application. it also expose a Decorator for controller and controller methods specific timeouts.
+NestJS Timeout Interceptor repository. It enables setting up a timeout for a NestJS application. It also exposes a Decorator for controller and controller methods specific timeouts.
 
 ## Installation
 
