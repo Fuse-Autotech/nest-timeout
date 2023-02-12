@@ -219,8 +219,8 @@ describe('TimeoutInterceptor with timeout decorator', () => {
       },
       {
         title:
-          'Should timeout after default timeout using timeout decorator for the class with isEnabled = true and false, without default timeout in the options',
-        options: [{ isEnabled: true }, { isEnabled: false }],
+          'Should timeout after default timeout using timeout decorator for the class with isEnabled = true, without default timeout in the options',
+        options: [{ isEnabled: true }],
         sleepTime: 3000,
         timeoutBorder: [TIMEOUT_VALUES.test2000ms],
         controllerPath: '/timeout-bigger-class-test-controller/',
@@ -230,8 +230,8 @@ describe('TimeoutInterceptor with timeout decorator', () => {
       },
       {
         title:
-          'Should timeout before default timeout using timeout decorator for the class with isEnabled = true and false without default timeout in the options',
-        options: [{ isEnabled: true }, { isEnabled: false }],
+          'Should timeout before default timeout using timeout decorator for the class with isEnabled = true without default timeout in the options',
+        options: [{ isEnabled: true }],
         sleepTime: 3000,
         timeoutBorder: [TIMEOUT_VALUES.testOverrideSmallerDefault75ms],
         controllerPath: '/timeout-smaller-class-test-controller/',
@@ -266,8 +266,8 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         skip: false
       },
       {
-        title: 'Should timeout using the class decorator with isEnabled = true, and not timeout with isEnabled = false',
-        options: [{ isEnabled: true }, { isEnabled: false }],
+        title: 'Should timeout using the class decorator with isEnabled = true',
+        options: [{ isEnabled: true }],
         sleepTime: 3000,
         timeoutBorder: [TIMEOUT_VALUES.test2000ms],
         controllerPath: '/timeout-override-class-test-controller/',

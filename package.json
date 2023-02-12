@@ -5,6 +5,7 @@
   "author": "Gil Tichon & Alex Genkin",
   "private": false,
   "license": "MIT",
+  "entryPoint": "./dist/index.js",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc ",
