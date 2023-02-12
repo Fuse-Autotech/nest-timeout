@@ -20,14 +20,13 @@ export class TimeoutInterceptor implements NestInterceptor {
 	}
 
 	intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-		let { isEnabled } = this.options;
+		let { isEnabled = true } = this.options;
 		const controllerName = (context as any).constructorRef.name;
-		let timeout = this.getDecoratorTimeout(controllerName, context);
+		const timeout = this.getDecoratorTimeout(controllerName, context) ?? this.options.defaultTimeout;
 
-		if (!isNil(timeout)) {
-			isEnabled = timeout > 0;
-		} else {
-			timeout = this.options.defaultTimeout;
+		// If timeout is not defined or equal to zero (0)
+		if (isNil(timeout) || timeout <= 0) {
+			isEnabled = false;
 		}
 
 		return next.handle().pipe(timeoutIf(isEnabled, timeout));

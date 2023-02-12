@@ -1,7 +1,10 @@
 <div align="center">
-<a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo"/></a>
+<p align="center">
+  <a href="http://fuseautotech.com/" target="blank"><img src="https://fuseautotech.com/hubfs/Logo.svg" width="300" alt="Fuse Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
 
-<h1>Timeout Decorator for NestJS</h1>
+<h1>Timeout Interceptor for NestJS</h1>
 
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
@@ -10,47 +13,39 @@
 
 ## Description
 
-Nest timeout decorator repository. It enables you to set a timeout for your controller methods using the NestJS
-framework. It can be also used on the Controller class itself alongside with decorators on the methods. For
-the timeout it uses a timeout interceptor.
+NestJS Timeout Interceptor repository. It enables setting up a timeout for a NestJS application. it also expose a Decorator for controller and controller methods specific timeouts.
 
 ## Installation
 
 ```bash
-$ npm install
+$ npm install @fuse-autotech/nest-timeout
 ```
 
 ## Usage
-
+As a global intercaptor
 ```typescript
 
 import { Module, NestInterceptor } from "@nestjs/common";
 import { APP_INTERCEPTOR } from "@nestjs/core";
-import { TimeoutInterceptor } from "./timeout";
-import { IS_TIMEOUT_ENABLED, REQUEST_TIMEOUT_LIMIT } from "./timeout/constants";
+import { TimeoutInterceptor } from "@fuse-autotech/nest-timeout";
 
 @Module({
     imports: [],
     controllers: [],
     providers: [{
         provide: APP_INTERCEPTOR,
-        useFactory: async (): Promise<NestInterceptor> => {
-            return new TimeoutInterceptor({
-                defaultTimeout: +process.env.REQUEST_TIMEOUT_LIMIT ?? REQUEST_TIMEOUT_LIMIT,
-                isEnabled: Boolean(process.env.IS_TIMEOUT_ENABLED) ?? IS_TIMEOUT_ENABLED,
-            });
-        },
-        inject: [],
-    },],
+        useValue: new TimeoutInterceptor({ defaultTimeout: 36000 })
+    }]
 })
 export class AppModule {}
 
 ```
 
+Using the `@Timeout()` decorator for controller or controller methods specific timeouts
 ```typescript
 
 import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { Timeout } from '../decorator/timeout.decorator';
+import { Timeout } from '@fuse-autotech/nest-timeout';
 
 @Controller('timeout-override-class-test-controller')
 @Timeout(10000)
@@ -84,14 +79,8 @@ export class TimeoutOverrideClassTestController {
 ```bash
 # unit tests
 $ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## License
 
-Nest timeout is [MIT licensed](LICENSE).
+Nest timeout is [MIT licensed](LICENSE.md).
