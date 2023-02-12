@@ -1,9 +1,9 @@
 {
   "name": "nest-timeout",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "This package enables to use a custom timeout alongside with the global timeout interceptor.",
-  "author": "Alex Genkin",
-  "private": true,
+  "author": "Gil Tichon & Alex Genkin",
+  "private": false,
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
