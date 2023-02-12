@@ -2,7 +2,7 @@ import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { Timeout } from '../timeout.decorator';
 
 @Controller('timeout-override-class-test-controller')
-@Timeout(10000)
+@Timeout(2000)
 export class TimeoutOverrideClassTestController {
 	@Get('/:sleepTime')
 	async getTimeout(@Param('sleepTime') sleepTime: number): Promise<void> {
@@ -19,7 +19,7 @@ export class TimeoutOverrideClassTestController {
 	}
 
 	@Patch('/:sleepTime')
-	@Timeout(12000)
+	@Timeout(3000)
 	async patchTimeout(@Param('sleepTime') sleepTime: number): Promise<void> {
 		await new Promise((resolve) => setTimeout(resolve, sleepTime));
 

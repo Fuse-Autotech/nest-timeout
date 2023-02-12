@@ -25,7 +25,7 @@ export class TimeoutMethodTestController {
 		return;
 	}
 	@Delete('/:sleepTime')
-	@Timeout(12000)
+	@Timeout(3000)
 	async overrideTimeout(@Param('sleepTime') sleepTime: number): Promise<void> {
 		await new Promise((resolve) => setTimeout(resolve, sleepTime));
 

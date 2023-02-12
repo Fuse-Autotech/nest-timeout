@@ -2,7 +2,7 @@ import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { Timeout } from '../timeout.decorator';
 
 @Controller('timeout-bigger-class-test-controller')
-@Timeout(12000)
+@Timeout(2000)
 export class TimeoutBiggerClassTestController {
 	@Get('/:sleepTime')
 	async getTimeout(@Param('sleepTime') sleepTime: number): Promise<void> {
