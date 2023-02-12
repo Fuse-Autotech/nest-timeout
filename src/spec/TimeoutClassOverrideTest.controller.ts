@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { Timeout } from '../timeout.decorator';
+import { Timeout } from '../Timeout.decorator';
 
 @Controller('timeout-override-class-test-controller')
 @Timeout(2000)
