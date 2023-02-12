@@ -1,4 +1,4 @@
-<div align="center" style="background-color: darkgray">
+<div align="center">
 <p align="center">
   <a href="http://fuseautotech.com/" target="blank"><img src="https://fuseautotech.com/hubfs/Logo.svg" width="300" alt="Fuse Logo" /></a>
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
@@ -34,7 +34,7 @@ import { TimeoutInterceptor } from "@fuse-autotech/nest-timeout";
     controllers: [],
     providers: [{
         provide: APP_INTERCEPTOR,
-        useValue: new TimeoutInterceptor({ defaultTimeout: 36000 })
+        useValue: new TimeoutInterceptor({ defaultTimeout: 10000 })
     }]
 })
 export class AppModule {}
