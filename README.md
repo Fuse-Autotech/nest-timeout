@@ -25,7 +25,7 @@ $ npm install @fuse-autotech/nest-timeout
 As a global intercaptor
 ```typescript
 
-import { Module, NestInterceptor } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { TimeoutInterceptor } from "@fuse-autotech/nest-timeout";
 
