@@ -25,6 +25,8 @@ jobs:
       - checkout
       - node/install-packages:
           cache-path: ~/project/node_modules
+          include-branch-in-cache-key: false
+          cache-version: v2
           override-ci-command: npm install
       - run: npm run << parameters.npm-run >>
   release:
