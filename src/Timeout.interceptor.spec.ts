@@ -134,9 +134,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
       [
         {
           title: 'Should timeout using the default timeout value',
-          options: [
-            { defaultTimeout: TIMEOUT_VALUES.test100ms },
-          ],
+          options: [{ defaultTimeout: TIMEOUT_VALUES.test100ms } as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test100ms],
           controllerPath: '/timeout-method-test-controller/',
@@ -147,9 +145,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should not timeout using the default timeout using timeout decorator',
-          options: [
-            { isEnabled: false, defaultTimeout: TIMEOUT_VALUES.test100ms },
-          ],
+          options: [{ isEnabled: false, defaultTimeout: TIMEOUT_VALUES.test100ms } as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.noTimeout,
           timeoutBorder: [TIMEOUT_VALUES.noTimeout],
           controllerPath: '/timeout-method-test-controller/',
@@ -160,9 +156,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should not timeout before default timeout using timeout decorator',
-          options: [
-            { isEnabled: false, defaultTimeout: TIMEOUT_VALUES.test1000ms },
-          ],
+          options: [{ isEnabled: false, defaultTimeout: TIMEOUT_VALUES.test1000ms } as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.noTimeout,
           timeoutBorder: [TIMEOUT_VALUES.noTimeout],
           controllerPath: '/timeout-method-test-controller/',
@@ -173,9 +167,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should timeout before default timeout using timeout decorator',
-          options: [
-            { defaultTimeout: TIMEOUT_VALUES.test1000ms },
-          ],
+          options: [{ defaultTimeout: TIMEOUT_VALUES.test1000ms } as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.timeout500ms],
           controllerPath: '/timeout-method-test-controller/',
@@ -186,9 +178,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should timeout after default timeout using timeout decorator',
-          options: [
-            { defaultTimeout: TIMEOUT_VALUES.test1000ms },
-          ],
+          options: [{ defaultTimeout: TIMEOUT_VALUES.test1000ms } as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-bigger-class-test-controller/',
@@ -232,7 +222,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should override class decorator with method decorator with a smaller value',
-          options: [{ defaultTimeout: TIMEOUT_VALUES.test1000ms }],
+          options: [{ defaultTimeout: TIMEOUT_VALUES.test1000ms } as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [
             TIMEOUT_VALUES.timeout500ms,
