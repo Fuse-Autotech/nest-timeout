@@ -281,14 +281,13 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           skip: false,
         },
         {
-          title:
-              'Should not timeout (disable timeout) using the class decorator with value = 0',
+          title: 'Should not timeout (disable timeout) using the class decorator with value = 0',
           options: [{}, { isEnabled: false }],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test3000ms],
           controllerPath: '/timeout-override-class-test-controller/',
           restMethod: ['delete'],
-          responseStatus: [HttpStatus.OK], // status ok requires sleepTime and timeoutBorder have the same value
+          responseStatus: [HttpStatus.OK],
           skip: false
         },
       ] as TestOptions[]
@@ -348,6 +347,7 @@ const testRequestTimeAndStatus = async ({
     if (!overrideWithSmallerValue) {
       expect(timeoutDurationValue).toBeGreaterThanOrEqual(timeoutBorder[index]);
     }
+
     expect(timeoutDurationValue).toBeLessThan(
       timeoutBorder[index] + TIMEOUT_VALUES.requestRTT,
     );
