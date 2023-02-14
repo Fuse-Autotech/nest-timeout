@@ -5,15 +5,12 @@
 </p>
 
 <h1>Timeout Interceptor for NestJS</h1>
-
-[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Fuse-Autotech](https://circleci.com/gh/Fuse-Autotech/nest-timeout.svg?branch=main&style=shield&circle-token=94c693abc89341393d317ca92a78e8da4f7ca104)](https://app.circleci.com/pipelines/github/Fuse-Autotech/nest-timeout)
 </div>
 
 ## Description
 
-NestJS Timeout Interceptor repository. It enables setting up a timeout for a NestJS application. It also exposes a Decorator for controller and controller methods specific timeouts.
+NestJS Timeout Interceptor repository. It enables setting up a global timeout for a NestJS application, which can be overridden by a Timeout Decorator for controller classes and methods specific timeouts.
+This gives the user more flexibility with a small amount of additional code. Method timeouts are preferred over class timeouts, which are preferred over global timeouts. Enjoy!
 
 ## Installation
 
@@ -22,7 +19,7 @@ $ npm install @fuse-autotech/nest-timeout
 ```
 
 ## Usage
-As a global intercaptor
+As a global interceptor
 ```typescript
 
 import { Module } from "@nestjs/common";
@@ -72,13 +69,6 @@ export class TimeoutOverrideClassTestController {
         return;
     }
 }
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
 ```
 
 ## License
