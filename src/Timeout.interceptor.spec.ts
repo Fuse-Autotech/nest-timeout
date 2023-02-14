@@ -305,6 +305,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           title = (isNil(option?.isEnabled) ? 'isEnabled = true  - ' : 'isEnabled = false - ') + title;
           const testFn = skip ? xit : it;
           testFn(title, async () => {
+            // Arrange
             await setUpModule(option);
 
             await testRequestTimeAndStatus(
@@ -334,6 +335,7 @@ const testRequestTimeAndStatus = async ({
   for (const [index, method] of restMethod.entries()) {
     const startTime = new Date().valueOf();
 
+    // Act
     const response = await request(httpServer)[method](
       `${controllerPath}${sleepTime}`,
     );
@@ -341,6 +343,7 @@ const testRequestTimeAndStatus = async ({
 
     const timeoutDurationValue = endTime - startTime;
 
+    // Assert
     if (!overrideWithSmallerValue) {
       expect(timeoutDurationValue).toBeGreaterThanOrEqual(timeoutBorder[index]);
     }
