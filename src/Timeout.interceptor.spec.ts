@@ -129,7 +129,6 @@ describe('TimeoutInterceptor without timeout decorator', () => {
   });
 });
 
-// status ok requires sleepTime and timeoutBorder have the same value for one route
 describe('TimeoutInterceptor with timeout decorator', () => {
   const testCases: IDecoratorTestCase[] =
       [
