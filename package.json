@@ -5,6 +5,7 @@
   "author": "Gil Tichon & Alex Genkin",
   "private": false,
   "license": "MIT",
+  "main":"index.js",
   "entryPoint": "./dist/index.js",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -21,12 +22,6 @@
   "files": [
     "dist/**"
   ],
-  "dependencies": {
-    "@nestjs/common": ">=8.0.0",
-    "@nestjs/core": ">=8.0.0",
-    "reflect-metadata": "^0.1.12",
-    "rxjs": "^7.1.0"
-  },
   "peerDependencies": {
     "@nestjs/common": ">=8.0.0",
     "@nestjs/core": ">=8.0.0",
