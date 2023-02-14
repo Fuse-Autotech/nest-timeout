@@ -6,6 +6,7 @@ export const TIMEOUT_VALUES = {
 	test1000ms: 1000,
 	test2000ms: 2000,
 	test3000ms: 3000,
+	test5000ms: 5000,
 	defaultTimeout: 10 * 1000,
 	testOverrideSmallerDefault75ms: 75,
 };

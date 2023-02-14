@@ -10,6 +10,7 @@ import { TimeoutMethodTestController } from "./spec/TimeoutMethodTest.controller
 import { TimeoutBiggerClassTestController } from "./spec/TimeoutBiggerClassTest.controller";
 import { TimeoutSmallerClassTestController } from "./spec/TimeoutSmallerClassTest.controller";
 import { TimeoutOverrideClassTestController } from "./spec/TimeoutClassOverrideTest.controller";
+import {isNil} from "./internal/utils";
 
 let app: INestApplication;
 let httpServer;
@@ -141,7 +142,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           options: [
             { defaultTimeout: TIMEOUT_VALUES.test100ms },
           ],
-          sleepTime: 3000,
+          sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test100ms],
           controllerPath: '/timeout-method-test-controller/',
           restMethod: ['get'],
@@ -154,7 +155,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           options: [
             { isEnabled: false, defaultTimeout: TIMEOUT_VALUES.test100ms },
           ],
-          sleepTime: 0,
+          sleepTime: TIMEOUT_VALUES.noTimeout,
           timeoutBorder: [TIMEOUT_VALUES.noTimeout],
           controllerPath: '/timeout-method-test-controller/',
           restMethod: ['get'],
@@ -163,11 +164,11 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         },
         {
           title:
-            'Should not timeout before default timeout using timeout decorator with isEnabled = false',
+            'Should not timeout before default timeout using timeout decorator',
           options: [
             { isEnabled: false, defaultTimeout: TIMEOUT_VALUES.test1000ms },
           ],
-          sleepTime: 0,
+          sleepTime: TIMEOUT_VALUES.noTimeout,
           timeoutBorder: [TIMEOUT_VALUES.noTimeout],
           controllerPath: '/timeout-method-test-controller/',
           restMethod: ['post'],
@@ -176,11 +177,11 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         },
         {
           title:
-            'Should timeout before default timeout using timeout decorator with isEnabled = true',
+            'Should timeout before default timeout using timeout decorator',
           options: [
             { defaultTimeout: TIMEOUT_VALUES.test1000ms },
           ],
-          sleepTime: 3000,
+          sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.timeout500ms],
           controllerPath: '/timeout-method-test-controller/',
           restMethod: ['post'],
@@ -189,11 +190,11 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         },
         {
           title:
-            'Should timeout after default timeout using timeout decorator with isEnabled = true',
+            'Should timeout after default timeout using timeout decorator',
           options: [
             { defaultTimeout: TIMEOUT_VALUES.test1000ms },
           ],
-          sleepTime: 3000,
+          sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-bigger-class-test-controller/',
           restMethod: ['patch'],
@@ -202,9 +203,9 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         },
         {
           title:
-            'Should timeout after default timeout using timeout decorator with isEnabled = true, without default timeout in the options',
+            'Should timeout after default timeout using timeout decorator without default timeout in the options',
           options: [{ }],
-          sleepTime: 3000,
+          sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-bigger-class-test-controller/',
           restMethod: ['delete'],
@@ -213,9 +214,9 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         },
         {
           title:
-            'Should timeout after default timeout using timeout decorator for the class with isEnabled = true, without default timeout in the options',
+            'Should timeout after default timeout using timeout decorator for the class without default timeout in the options',
           options: [{}],
-          sleepTime: 3000,
+          sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-bigger-class-test-controller/',
           restMethod: ['delete'],
@@ -224,9 +225,9 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         },
         {
           title:
-            'Should timeout before default timeout using timeout decorator for the class with isEnabled = true without default timeout in the options',
-          options: [{  }],
-          sleepTime: 3000,
+            'Should timeout before default timeout using timeout decorator for the class without default timeout in the options',
+          options: [{}],
+          sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.testOverrideSmallerDefault75ms],
           controllerPath: '/timeout-smaller-class-test-controller/',
           restMethod: ['delete'],
@@ -236,8 +237,8 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should override class decorator with method decorator with a smaller value',
-          options: [{ defaultTimeout: 1000 }],
-          sleepTime: 3000,
+          options: [{ defaultTimeout: TIMEOUT_VALUES.test1000ms }],
+          sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [
             TIMEOUT_VALUES.timeout500ms,
             TIMEOUT_VALUES.defaultTimeout,
@@ -252,7 +253,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           title:
             'Should override class decorator with method decorator with a bigger value',
           options: [{}],
-          sleepTime: 5000,
+          sleepTime: TIMEOUT_VALUES.test5000ms,
           timeoutBorder: [TIMEOUT_VALUES.test3000ms],
           controllerPath: '/timeout-override-class-test-controller/',
           restMethod: ['patch'],
@@ -260,9 +261,9 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           skip: false
         },
         {
-          title: 'Should timeout using the class decorator with isEnabled = true',
+          title: 'Should timeout using the class decorator',
           options: [{}],
-          sleepTime: 3000,
+          sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-override-class-test-controller/',
           restMethod: ['get'],
@@ -282,9 +283,9 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
               'Should not timeout (disable timeout) using the class decorator with value = 0',
-          options: [{}, {isEnabled: false}],
-          sleepTime: 3000,
-          timeoutBorder: [3000],
+          options: [{}, { isEnabled: false }],
+          sleepTime: TIMEOUT_VALUES.test3000ms,
+          timeoutBorder: [TIMEOUT_VALUES.test3000ms],
           controllerPath: '/timeout-override-class-test-controller/',
           restMethod: ['delete'],
           responseStatus: [HttpStatus.OK], // status ok requires sleepTime and timeoutBorder have the same value
@@ -304,18 +305,21 @@ describe('TimeoutInterceptor with timeout decorator', () => {
          skip
        }) => {
         options.forEach((option) => {
+          // isEnabled is set to true in the timeout interceptor
+          title = (isNil(option?.isEnabled) ? 'isEnabled = true  - ' : 'isEnabled = false - ') + title;
           const testFn = skip ? xit : it;
           testFn(title, async () => {
-            // Arrange
-
             await setUpModule(option);
+
             await testRequestTimeAndStatus(
-                sleepTime,
-                restMethod,
-                timeoutBorder,
-                responseStatus,
-                controllerPath,
-                overrideWithSmallerValue
+                {
+                  sleepTime,
+                  restMethod,
+                  timeoutBorder,
+                  responseStatus,
+                  controllerPath,
+                  overrideWithSmallerValue
+                }
             );
           });
         });
@@ -323,14 +327,14 @@ describe('TimeoutInterceptor with timeout decorator', () => {
   );
 });
 
-const testRequestTimeAndStatus = async (
-  sleepTime: number,
-  restMethod: string[],
-  timeoutBorder: number[],
-  responseStatus: HttpStatus[],
-  controllerPath: string,
-  overrideWithSmallerValue: boolean = false,
-): Promise<void> => {
+const testRequestTimeAndStatus = async ({
+      sleepTime,
+      restMethod,
+      timeoutBorder,
+      responseStatus,
+      controllerPath,
+      overrideWithSmallerValue = false,
+    }: Partial<TestOptions>): Promise<void> => {
   for (const [index, method] of restMethod.entries()) {
     const startTime = new Date().valueOf();
 
