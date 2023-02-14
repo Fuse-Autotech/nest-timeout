@@ -1,3 +1,6 @@
+import { ITimeoutInterceptorOptions } from 'src/types';
+import { HttpStatus } from '@nestjs/common';
+
 export const TIMEOUT_VALUES = {
 	noTimeout: 0,
 	requestRTT: 50, // RoundTripTime, approx. request time without delays, tested in debug. Can fail on other machines.
@@ -10,3 +13,23 @@ export const TIMEOUT_VALUES = {
 	defaultTimeout: 10 * 1000,
 	testOverrideSmallerDefault75ms: 75,
 };
+
+export interface IGlobalTestCase {
+	title: string;
+	options: ITimeoutInterceptorOptions;
+	shouldTimeout: boolean;
+	addSleepTime: boolean;
+}
+
+export interface IDecoratorTestCase {
+	title: string;
+	options: ITimeoutInterceptorOptions[];
+	addSleepTime?: boolean;
+	controllerPath: string;
+	restMethod: string[];
+	responseStatus: HttpStatus[];
+	sleepTime: number;
+	timeoutBorder: number[];
+	overrideWithSmallerValue?: boolean;
+	skip: boolean;
+}

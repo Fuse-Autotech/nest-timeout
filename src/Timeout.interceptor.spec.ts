@@ -3,8 +3,8 @@ import { HttpStatus, INestApplication } from "@nestjs/common";
 import * as request from "supertest";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { TimeoutInterceptor } from "./Timeout.interceptor";
-import { ITimeoutInterceptorOptions, TestOptions } from "./types";
-import { TIMEOUT_VALUES } from "./spec/types";
+import { ITimeoutInterceptorOptions } from "./types";
+import {IDecoratorTestCase, IGlobalTestCase, TIMEOUT_VALUES} from "./spec/types";
 import { TestController } from "./spec/Test.controller";
 import { TimeoutMethodTestController } from "./spec/TimeoutMethodTest.controller";
 import { TimeoutBiggerClassTestController } from "./spec/TimeoutBiggerClassTest.controller";
@@ -19,15 +19,13 @@ afterAll(async () => {
   await app.close();
 });
 
-async function setUpModule(
-  timeoutOptions: ITimeoutInterceptorOptions,
-): Promise<void> {
+async function setUpModule(timeoutOptions: ITimeoutInterceptorOptions): Promise<void> {
   const moduleRef = await Test.createTestingModule({
     providers: [
       {
         provide: APP_INTERCEPTOR,
         useFactory: (): TimeoutInterceptor => {
-          return new TimeoutInterceptor(timeoutOptions);
+          return new TimeoutInterceptor(timeoutOptions as ITimeoutInterceptorOptions);
         },
       },
     ],
@@ -46,9 +44,7 @@ async function setUpModule(
 }
 
 describe('TimeoutInterceptor without timeout decorator', () => {
-  async function setUpModule(
-    timeoutOptions: ITimeoutInterceptorOptions,
-  ): Promise<void> {
+  const setUpModule = async (timeoutOptions: ITimeoutInterceptorOptions): Promise<void> => {
     const moduleRef = await Test.createTestingModule({
       providers: [
         {
@@ -66,17 +62,19 @@ describe('TimeoutInterceptor without timeout decorator', () => {
     httpServer = app.getHttpServer();
   }
 
-  (
+  const testCases: IGlobalTestCase[] =
     [
       {
         title: 'Should timeout using the default timeout value',
         options: { defaultTimeout: 100 },
         shouldTimeout: true,
+        addSleepTime: true,
       },
       {
         title: 'Should timeout using overrides without method that apply',
         options: { defaultTimeout: 1000 },
         shouldTimeout: true,
+        addSleepTime: true,
       },
       {
         title:
@@ -89,6 +87,7 @@ describe('TimeoutInterceptor without timeout decorator', () => {
         title: 'Should timeout using overrides with method that apply',
         options: { defaultTimeout: 1000 },
         shouldTimeout: true,
+        addSleepTime: true,
       },
       {
         title:
@@ -107,14 +106,11 @@ describe('TimeoutInterceptor without timeout decorator', () => {
         title: 'Should not timeout when disabled',
         options: { isEnabled: false, defaultTimeout: 100 },
         shouldTimeout: false,
+        addSleepTime: true,
       },
-    ] as {
-      title: string;
-      options: ITimeoutInterceptorOptions;
-      shouldTimeout: boolean;
-      addSleepTime?: boolean;
-    }[]
-  ).map(({ title, options, shouldTimeout, addSleepTime = true }) => {
+    ];
+
+  testCases.map(({ title, options, shouldTimeout, addSleepTime = true }) => {
     it(title, async () => {
       // Arrange
       await setUpModule(options);
@@ -135,7 +131,7 @@ describe('TimeoutInterceptor without timeout decorator', () => {
 
 // status ok requires sleepTime and timeoutBorder have the same value for one route
 describe('TimeoutInterceptor with timeout decorator', () => {
-  (
+  const testCases: IDecoratorTestCase[] =
       [
         {
           title: 'Should timeout using the default timeout value',
@@ -204,7 +200,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should timeout after default timeout using timeout decorator without default timeout in the options',
-          options: [{ }],
+          options: [{} as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-bigger-class-test-controller/',
@@ -215,7 +211,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should timeout after default timeout using timeout decorator for the class without default timeout in the options',
-          options: [{}],
+          options: [{} as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-bigger-class-test-controller/',
@@ -226,7 +222,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should timeout before default timeout using timeout decorator for the class without default timeout in the options',
-          options: [{}],
+          options: [{} as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.testOverrideSmallerDefault75ms],
           controllerPath: '/timeout-smaller-class-test-controller/',
@@ -252,7 +248,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         {
           title:
             'Should override class decorator with method decorator with a bigger value',
-          options: [{}],
+          options: [{} as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test5000ms,
           timeoutBorder: [TIMEOUT_VALUES.test3000ms],
           controllerPath: '/timeout-override-class-test-controller/',
@@ -262,7 +258,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         },
         {
           title: 'Should timeout using the class decorator',
-          options: [{}],
+          options: [{} as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-override-class-test-controller/',
@@ -272,7 +268,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         },
         {
           title: 'Should not timeout using the class decorator',
-          options: [{}, { isEnabled: false }],
+          options: [{} as ITimeoutInterceptorOptions, { isEnabled: false } as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test1000ms,
           timeoutBorder: [TIMEOUT_VALUES.test1000ms],
           controllerPath: '/timeout-override-class-test-controller/',
@@ -282,7 +278,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
         },
         {
           title: 'Should not timeout (disable timeout) using the class decorator with value = 0',
-          options: [{}, { isEnabled: false }],
+          options: [{} as ITimeoutInterceptorOptions, { isEnabled: false } as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
           timeoutBorder: [TIMEOUT_VALUES.test3000ms],
           controllerPath: '/timeout-override-class-test-controller/',
@@ -290,8 +286,9 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           responseStatus: [HttpStatus.OK],
           skip: false
         },
-      ] as TestOptions[]
-  ).map(
+      ];
+
+  testCases.map(
       ({
          title,
          options,
@@ -333,7 +330,7 @@ const testRequestTimeAndStatus = async ({
       responseStatus,
       controllerPath,
       overrideWithSmallerValue = false,
-    }: Partial<TestOptions>): Promise<void> => {
+    }: Partial<IDecoratorTestCase>): Promise<void> => {
   for (const [index, method] of restMethod.entries()) {
     const startTime = new Date().valueOf();
 
