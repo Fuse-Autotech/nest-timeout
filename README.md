@@ -22,7 +22,7 @@ $ npm install @fuse-autotech/nest-timeout
 ### Interceptor
 Options:
 * `defaultTimeout` - Number of milliseconds after which the interceptor throws a `RequestTimeoutException` if no other timeout is defined for the endpoint
-* `[isEnabled = true]` - Determain if the interceptor is enabled. Defaults to `true`. useful for debugging to avoid timeouts
+* `[isEnabled]` - Determain if the interceptor is enabled. Defaults to `true`. useful for debugging to avoid timeouts
 ```typescript
 
 import { Module } from "@nestjs/common";
