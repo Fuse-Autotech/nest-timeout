@@ -19,7 +19,10 @@ $ npm install @fuse-autotech/nest-timeout
 ```
 
 ## Usage
-As a global interceptor
+### Interceptor
+Options:
+* `defaultTimeout` - Number of milliseconds after which the interceptor throws a `RequestTimeoutException` if no other timeout is defined for the endpoint
+* `[isEnabled = true]` - Determain if the interceptor is enabled. Defaults to `true`. useful for debugging to avoid timeouts
 ```typescript
 
 import { Module } from "@nestjs/common";
@@ -37,36 +40,31 @@ import { TimeoutInterceptor } from "@fuse-autotech/nest-timeout";
 export class AppModule {}
 
 ```
-
-Using the `@Timeout()` decorator for controller or controller methods specific timeouts
+### `@Timeout()` Decorator
+Can be used both on Controllers and Controller Methods:
 ```typescript
 
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { Timeout } from '@fuse-autotech/nest-timeout';
 
-@Controller('timeout-override-class-test-controller')
-@Timeout(10000)
-export class TimeoutOverrideClassTestController {
-    @Get('/:sleepTime')
-    async getTimeout(@Param('sleepTime') sleepTime: number): Promise<void> {
-        await new Promise((resolve) => setTimeout(resolve, sleepTime));
-
-        return;
+@Controller('cats')
+@Timeout(10000) // Applied for all methods unless decorated
+export class CatsController {
+    @Get()
+    findAll(): string {
+        return 'This action returns all cats';
     }
-    @Post('/:sleepTime')
-    @Timeout(75)
-    async postTimeout(@Param('sleepTime') sleepTime: number): Promise<void> {
-        await new Promise((resolve) => setTimeout(resolve, sleepTime));
+		
+		@Get(':id') 
+    @Timeout(30000) // Overrides controller timeout
+    findOne(@Param('id') id: string ): string {
+			return `This action returns a #${id} cat`;
+		}
 
-        return;
-    }
-
-    @Patch('/:sleepTime')
-    @Timeout(12000)
-    async patchTimeout(@Param('sleepTime') sleepTime: number): Promise<void> {
-        await new Promise((resolve) => setTimeout(resolve, sleepTime));
-
-        return;
+    @Post()
+    @Timeout(0) // Disables timeout for the method
+    create(): string {
+        return 'This action adds a new cat';
     }
 }
 ```
