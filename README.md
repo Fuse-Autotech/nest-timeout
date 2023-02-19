@@ -22,7 +22,7 @@ $ npm install @fuse-autotech/nest-timeout
 ### Interceptor
 Options:
 * `defaultTimeout` - Number of milliseconds after which the interceptor throws a `RequestTimeoutException` if no other timeout is defined for the endpoint
-* `[isEnabled]` - Determain if the interceptor is enabled. Defaults to `true`. useful for debugging to avoid timeouts
+* `isEnabled` - Determine if the interceptor is enabled. Defaults to `true`. Useful for debugging to avoid timeouts
 ```typescript
 
 import { Module } from "@nestjs/common";
@@ -55,7 +55,7 @@ export class CatsController {
         return 'This action returns all cats';
     }
 		
-		@Get(':id') 
+    @Get(':id') 
     @Timeout(30000) // Overrides controller timeout
     findOne(@Param('id') id: string ): string {
 			return `This action returns a #${id} cat`;

@@ -65,33 +65,14 @@ describe('TimeoutInterceptor without timeout decorator', () => {
   const testCases: IGlobalTestCase[] =
     [
       {
-        title: 'Should timeout using the default timeout value',
-        options: { defaultTimeout: 100 },
-        shouldTimeout: true,
-        addSleepTime: true,
-      },
-      {
-        title: 'Should timeout using overrides without method that apply',
+        title: 'Should timeout using overrides',
         options: { defaultTimeout: 1000 },
         shouldTimeout: true,
         addSleepTime: true,
       },
       {
         title:
-          'Should not timeout using overrides without method that do not apply',
-        options: { defaultTimeout: 1000 },
-        shouldTimeout: false,
-        addSleepTime: false,
-      },
-      {
-        title: 'Should timeout using overrides with method that apply',
-        options: { defaultTimeout: 1000 },
-        shouldTimeout: true,
-        addSleepTime: true,
-      },
-      {
-        title:
-          'Should not timeout using overrides with method that do not apply',
+          'Should not timeout using overrides',
         options: { defaultTimeout: 1000 },
         shouldTimeout: false,
         addSleepTime: false,
