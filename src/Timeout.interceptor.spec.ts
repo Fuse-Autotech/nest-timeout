@@ -110,7 +110,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           title: 'Should timeout using the default timeout value',
           options: [{ defaultTimeout: TIMEOUT_VALUES.test100ms } as ITimeoutInterceptorOptions],
           sleepTime: TIMEOUT_VALUES.test3000ms,
-          timeoutBorder: [TIMEOUT_VALUES.test100ms], //
+          timeoutBorder: [TIMEOUT_VALUES.test100ms],
           controllerPath: '/timeout-method-test-controller/',
           restMethod: ['get'],
           responseStatus: [HttpStatus.REQUEST_TIMEOUT],
