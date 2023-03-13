@@ -55,9 +55,8 @@ workflows:
       - node-run:
           name: build
           npm-run: build
-      - node-run:
+      - test:
           name: test
-          npm-run: test
       - release:
           name: release
           requires:
