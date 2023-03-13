@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.1.0
+  coveralls: coveralls/coveralls@2.0.0
 
 executors:
   default:
@@ -28,6 +29,16 @@ jobs:
           include-branch-in-cache-key: false
           override-ci-command: npm install
       - run: npm run << parameters.npm-run >>
+  test:
+    executor: default
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          include-branch-in-cache-key: false
+          override-ci-command: npm install
+      - run: npm run test:cov
+      - coveralls/upload
   release:
     executor: node18
     steps:
