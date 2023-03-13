@@ -39,6 +39,7 @@ jobs:
           override-ci-command: npm install
       - run: npm run test:cov
       - coveralls/upload
+
   release:
     executor: node18
     steps:
