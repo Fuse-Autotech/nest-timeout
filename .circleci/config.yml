@@ -39,6 +39,11 @@ jobs:
           override-ci-command: npm install
       - run: npm run test:cov
       - coveralls/upload
+  coveralls-upload:
+    executor: default
+    steps:
+      - coveralls/upload:
+          parallel_finished: true
 
   release:
     executor: node18
@@ -57,6 +62,10 @@ workflows:
           npm-run: build
       - test:
           name: test
+      - coveralls-upload:
+          name: coverall-upload
+          requires:
+            - test
       - release:
           name: release
           requires:
