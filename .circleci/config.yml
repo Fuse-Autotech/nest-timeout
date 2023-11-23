@@ -12,7 +12,7 @@ executors:
       PARAM_CACHE_PATH: node_modules
   node18:
     docker:
-      - image: cimg/node:18.14.0
+      - image: cimg/node:18.17.0
     environment:
       PARAM_CACHE_PATH: node_modules
 
