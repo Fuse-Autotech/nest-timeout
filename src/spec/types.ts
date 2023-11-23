@@ -1,4 +1,4 @@
-import { ITimeoutInterceptorOptions } from 'src/types';
+import { ITimeoutCallback, ITimeoutInterceptorOptions } from 'src/types';
 import { HttpStatus } from '@nestjs/common';
 
 export const TIMEOUT_VALUES = {
@@ -19,6 +19,7 @@ export interface IGlobalTestCase {
 	options: ITimeoutInterceptorOptions;
 	shouldTimeout: boolean;
 	addSleepTime: boolean;
+	shouldInvokeCallback?: boolean;
 }
 
 export interface IDecoratorTestCase {
@@ -32,4 +33,5 @@ export interface IDecoratorTestCase {
 	timeoutBorder: number[];
 	overrideWithSmallerValue?: boolean;
 	skip: boolean;
+	callback?: ITimeoutCallback;
 }
