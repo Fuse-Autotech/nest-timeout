@@ -106,7 +106,7 @@ describe('TimeoutInterceptor without timeout decorator', () => {
 
       // Assert
       expect(response.status).toEqual(
-        shouldTimeout ? HttpStatus.REQUEST_TIMEOUT : HttpStatus.OK,
+        shouldTimeout ? HttpStatus.GATEWAY_TIMEOUT : HttpStatus.OK,
       );
 
       if (shouldInvokeCallback) {
@@ -126,7 +126,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           timeoutBorder: [TIMEOUT_VALUES.test100ms],
           controllerPath: '/timeout-method-test-controller/',
           restMethod: ['get'],
-          responseStatus: [HttpStatus.REQUEST_TIMEOUT],
+          responseStatus: [HttpStatus.GATEWAY_TIMEOUT],
           skip: false
         },
         {
@@ -148,7 +148,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           timeoutBorder: [TIMEOUT_VALUES.timeout500ms],
           controllerPath: '/timeout-method-test-controller/',
           restMethod: ['post'],
-          responseStatus: [HttpStatus.REQUEST_TIMEOUT],
+          responseStatus: [HttpStatus.GATEWAY_TIMEOUT],
           skip: false
         },
         {
@@ -159,7 +159,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-bigger-class-test-controller/',
           restMethod: ['patch'],
-          responseStatus: [HttpStatus.REQUEST_TIMEOUT],
+          responseStatus: [HttpStatus.GATEWAY_TIMEOUT],
           skip: false
         },
         {
@@ -170,7 +170,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-bigger-class-test-controller/',
           restMethod: ['delete'],
-          responseStatus: [HttpStatus.REQUEST_TIMEOUT],
+          responseStatus: [HttpStatus.GATEWAY_TIMEOUT],
           skip: false
         },
         {
@@ -181,7 +181,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           timeoutBorder: [TIMEOUT_VALUES.testOverrideSmallerDefault75ms],
           controllerPath: '/timeout-smaller-class-test-controller/',
           restMethod: ['delete'],
-          responseStatus: [HttpStatus.REQUEST_TIMEOUT],
+          responseStatus: [HttpStatus.GATEWAY_TIMEOUT],
           skip: false
         },
         {
@@ -195,7 +195,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           ],
           controllerPath: '/timeout-override-class-test-controller/',
           restMethod: ['post', 'get'],
-          responseStatus: [HttpStatus.REQUEST_TIMEOUT, HttpStatus.REQUEST_TIMEOUT],
+          responseStatus: [HttpStatus.GATEWAY_TIMEOUT, HttpStatus.GATEWAY_TIMEOUT],
           overrideWithSmallerValue: true,
           skip: false
         },
@@ -207,7 +207,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           timeoutBorder: [TIMEOUT_VALUES.test3000ms],
           controllerPath: '/timeout-override-class-test-controller/',
           restMethod: ['patch'],
-          responseStatus: [HttpStatus.REQUEST_TIMEOUT],
+          responseStatus: [HttpStatus.GATEWAY_TIMEOUT],
           skip: false
         },
         {
@@ -217,7 +217,7 @@ describe('TimeoutInterceptor with timeout decorator', () => {
           timeoutBorder: [TIMEOUT_VALUES.test2000ms],
           controllerPath: '/timeout-override-class-test-controller/',
           restMethod: ['get'],
-          responseStatus: [HttpStatus.REQUEST_TIMEOUT],
+          responseStatus: [HttpStatus.GATEWAY_TIMEOUT],
           skip: false
         },
         {

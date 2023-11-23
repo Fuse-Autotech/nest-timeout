@@ -1,6 +1,6 @@
 import { Observable, OperatorFunction, throwError, TimeoutError } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
-import { RequestTimeoutException } from '@nestjs/common';
+import { GatewayTimeoutException } from '@nestjs/common';
 import { ITimeoutIf } from './types';
 
 export const timeoutIf = ({ isEnabled, time, controllerName, handlerName, callback }: ITimeoutIf): OperatorFunction<any, any> => {
@@ -12,7 +12,7 @@ export const timeoutIf = ({ isEnabled, time, controllerName, handlerName, callba
 						if (err instanceof TimeoutError) {
 							callback?.(controllerName, handlerName);
 
-							return throwError(new RequestTimeoutException());
+							return throwError(new GatewayTimeoutException());
 						}
 
 						return throwError(err);
