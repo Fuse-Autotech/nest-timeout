@@ -62,6 +62,8 @@ describe('TimeoutInterceptor without timeout decorator', () => {
     httpServer = app.getHttpServer();
   }
 
+  const callback = jest.fn();
+
   const testCases: IGlobalTestCase[] =
     [
       {
@@ -82,9 +84,16 @@ describe('TimeoutInterceptor without timeout decorator', () => {
         shouldTimeout: false,
         addSleepTime: true,
       },
+        {
+            title: 'Should call callback method',
+            options: { isEnabled: true, defaultTimeout: 100, callback },
+            shouldTimeout: true,
+            shouldInvokeCallback: true,
+            addSleepTime: true,
+        },
     ];
 
-  testCases.map(({ title, options, shouldTimeout, addSleepTime = true }) => {
+  testCases.map(({ title, options, shouldTimeout, addSleepTime, shouldInvokeCallback }) => {
     it(title, async () => {
       // Arrange
       await setUpModule(options);
@@ -99,6 +108,10 @@ describe('TimeoutInterceptor without timeout decorator', () => {
       expect(response.status).toEqual(
         shouldTimeout ? HttpStatus.REQUEST_TIMEOUT : HttpStatus.OK,
       );
+
+      if (shouldInvokeCallback) {
+          expect(callback).toHaveBeenCalledWith(TestController.name, 'get');
+      }
     });
   });
 });
