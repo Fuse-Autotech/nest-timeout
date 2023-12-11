@@ -19,6 +19,13 @@
     "clean": "rm -rf dist node_modules",
     "prepublishOnly": "npm run clean && npm i && npm run build && npm run test"
   },
+  "keywords": [
+    "nestjs",
+    "nest",
+    "timeout",
+    "interceptor",
+    "timeout-handler"
+  ],
   "files": [
     "dist/**"
   ],
